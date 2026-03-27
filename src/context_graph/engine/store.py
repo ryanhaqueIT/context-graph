@@ -77,17 +77,20 @@ def _step_dict(s: sqlite3.Row) -> dict:
 class GraphStore:
     """SQLite-backed graph store with WAL mode for concurrent reads."""
 
-    def __init__(self, db_path: Path) -> None:
+    def __init__(self, db_path: Path, *, check_same_thread: bool = True) -> None:
         resolved = Path(db_path)
         if resolved.suffix != ".db":
             resolved = resolved / "graph.db"
         resolved.parent.mkdir(parents=True, exist_ok=True)
         self._db_path = resolved
+        self._check_same_thread = check_same_thread
         self._conn: sqlite3.Connection | None = None
 
     def _get_conn(self) -> sqlite3.Connection:
         if self._conn is None:
-            self._conn = sqlite3.connect(str(self._db_path))
+            self._conn = sqlite3.connect(
+                str(self._db_path), check_same_thread=self._check_same_thread
+            )
             self._conn.row_factory = sqlite3.Row
             self._conn.execute("PRAGMA journal_mode=WAL")
             self._conn.execute("PRAGMA foreign_keys=ON")

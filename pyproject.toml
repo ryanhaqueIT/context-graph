@@ -9,6 +9,12 @@ description = "A context graph engine for harness engineering — captures Decis
 requires-python = ">=3.11"
 dependencies = [
     "kuzu>=0.7.0",
+    "tree-sitter>=0.23.0",
+    "tree-sitter-python>=0.23.0",
+    "tree-sitter-javascript>=0.23.0",
+    "tree-sitter-typescript>=0.23.0",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
 ]
 
 [project.optional-dependencies]
