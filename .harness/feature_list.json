@@ -1,0 +1,109 @@
+{
+  "version": "1.0",
+  "meta": {
+    "project": "context-graph",
+    "created": "2026-03-24",
+    "total": 7,
+    "passing": 0
+  },
+  "features": [
+    {
+      "id": "F001",
+      "category": "functional",
+      "priority": 1,
+      "description": "CLI initializes a context graph store in .harness/context-graph/",
+      "steps": [
+        "Run: python -m context_graph init",
+        "Verify .harness/context-graph/ directory is created with graph schema",
+        "Verify initialization message is printed"
+      ],
+      "passes": false,
+      "verified_by": null,
+      "verified_at": null
+    },
+    {
+      "id": "F002",
+      "category": "functional",
+      "priority": 1,
+      "description": "Record a DecisionTrace from an agent action (bug fix, review, validation failure)",
+      "steps": [
+        "Run: python -m context_graph record --type fix --file src/foo.py --evidence 'commit abc123' --rationale 'off-by-one in pagination'",
+        "Verify DecisionTrace node is created in graph",
+        "Verify edges link to the referenced file"
+      ],
+      "passes": false,
+      "verified_by": null,
+      "verified_at": null
+    },
+    {
+      "id": "F003",
+      "category": "functional",
+      "priority": 1,
+      "description": "Query related incidents by file path",
+      "steps": [
+        "Record 2+ DecisionTraces for the same file",
+        "Run: python -m context_graph query incidents --file src/foo.py",
+        "Verify all related traces are returned with timestamps and rationale"
+      ],
+      "passes": false,
+      "verified_by": null,
+      "verified_at": null
+    },
+    {
+      "id": "F004",
+      "category": "functional",
+      "priority": 2,
+      "description": "Query decision traces by module/directory",
+      "steps": [
+        "Record DecisionTraces across multiple files in one module",
+        "Run: python -m context_graph query decisions --module engine",
+        "Verify all traces for files in that module are returned"
+      ],
+      "passes": false,
+      "verified_by": null,
+      "verified_at": null
+    },
+    {
+      "id": "F005",
+      "category": "functional",
+      "priority": 2,
+      "description": "Query fix patterns by category (timeout, auth, null-pointer, etc.)",
+      "steps": [
+        "Record 3+ fixes with category tags",
+        "Run: python -m context_graph query patterns --category timeout",
+        "Verify matching fix patterns are returned with frequency counts"
+      ],
+      "passes": false,
+      "verified_by": null,
+      "verified_at": null
+    },
+    {
+      "id": "F006",
+      "category": "functional",
+      "priority": 2,
+      "description": "Ingest git history into the context graph as CodeChange nodes",
+      "steps": [
+        "Run: python -m context_graph ingest git",
+        "Verify CodeChange nodes are created for each commit",
+        "Verify file-level edges connect commits to files"
+      ],
+      "passes": false,
+      "verified_by": null,
+      "verified_at": null
+    },
+    {
+      "id": "F007",
+      "category": "reliability",
+      "priority": 3,
+      "description": "Graph health check reports coverage metrics (nodes, edges, files with traces)",
+      "steps": [
+        "Run: python -m context_graph health",
+        "Verify output shows total nodes, edges, files covered, files uncovered",
+        "Verify exit code 0"
+      ],
+      "passes": false,
+      "verified_by": null,
+      "verified_at": null
+    }
+  ]
+}

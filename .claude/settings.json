@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(scripts/validate.sh)",
+      "Bash(python3 scripts/harness_scorecard.py)",
+      "Bash(python3 scripts/ratchet.py*)",
+      "Bash(python3 scripts/check_imports.py)",
+      "Bash(python3 scripts/check_golden_principles.py)",
+      "Bash(python3 scripts/check_architecture.py)",
+      "Bash(python3 scripts/check_features.py)",
+      "Bash(scripts/boot_worktree.sh*)",
+      "Bash(ruff *)",
+      "Bash(python -m pytest*)",
+      "Bash(pyright*)",
+      "Bash(git *)"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(git push --force *)",
+      "Bash(git reset --hard *)"
+    ]
+  },
+  "hooks": {
+    "PreCommit": [
+      {
+        "command": "bash .claude/hooks/pre-commit.sh"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "command": "bash .claude/hooks/post-edit.sh"
+      }
+    ]
+  }
+}

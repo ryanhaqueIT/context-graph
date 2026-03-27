@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+
+# Harness engineering
+.harness/snapshots/
+instance-metadata.json
+*.pid
+/tmp/boot_worktree_*
+
+# OS
+.DS_Store
+Thumbs.db
